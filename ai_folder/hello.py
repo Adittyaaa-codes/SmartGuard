@@ -1,1 +1,0 @@
-#wirte your ai in this file
