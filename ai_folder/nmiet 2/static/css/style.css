@@ -1,0 +1,970 @@
+/* Enhanced Military-themed CSS for AI Surveillance System */
+
+:root {
+    --military-dark: #0a0e14;
+    --military-green: #1a3518;
+    --military-light-green: #2a5738;
+    --military-accent: #8b0000;
+    --military-text: #c5d1c8;
+    --military-highlight: #4a8;
+    --military-warning: #f0ad4e;
+    --military-danger: #d9534f;
+    --military-success: #5cb85c;
+    --neon-green: #00ff41;
+    --neon-blue: #00d4ff;
+    --matrix-green: #00ff00;
+}
+
+/* Base Styles with Enhanced Background */
+body {
+    background: linear-gradient(135deg, #0a0e14 0%, #1a1a2e 50%, #16213e 100%);
+    color: var(--military-text);
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Animated Military Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
+    animation: backgroundPulse 8s ease-in-out infinite;
+    z-index: -2;
+}
+
+/* Matrix-style falling code animation */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(90deg, transparent 98%, rgba(0, 255, 65, 0.03) 100%),
+        linear-gradient(180deg, transparent 98%, rgba(0, 255, 65, 0.03) 100%);
+    background-size: 50px 50px;
+    animation: matrixRain 20s linear infinite;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes matrixRain {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Floating particles animation */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+    opacity: 0.7;
+}
+
+.particle:nth-child(odd) {
+    background: var(--neon-blue);
+    animation-duration: 20s;
+}
+
+.particle:nth-child(3n) {
+    background: var(--military-highlight);
+    animation-duration: 25s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) translateX(0px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Military Header */
+.military-header {
+    background-color: var(--military-green);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/military-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: var(--military-text);
+    padding: 2rem 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid var(--military-accent);
+}
+
+/* Radar Animation */
+.radar-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 50%, rgba(10, 14, 20, 0.85) 100%);
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.radar-animation::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(74, 136, 128, 0.8), transparent);
+    animation: radarScan 6s linear infinite;
+    transform-origin: 0 0;
+}
+
+@keyframes radarScan {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.military-header .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Status Indicator */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--military-highlight);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    background-color: var(--military-success);
+    box-shadow: 0 0 10px var(--military-success);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Military Navigation */
+.military-nav {
+    background-color: var(--military-dark);
+    border-bottom: 1px solid var(--military-highlight);
+}
+
+.military-nav .nav-link {
+    color: var(--military-text);
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.military-nav .nav-link:hover,
+.military-nav .nav-link.active {
+    color: #fff;
+    background-color: var(--military-light-green);
+}
+
+.military-nav .nav-link i {
+    margin-right: 8px;
+}
+
+/* Digital Clock */
+.digital-clock {
+    font-family: 'Digital-7', monospace;
+    font-size: 1.2rem;
+    color: var(--military-highlight);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid var(--military-highlight);
+    display: inline-block;
+}
+
+.digital-clock span {
+    display: inline-block;
+    min-width: 2ch;
+    text-align: center;
+}
+
+/* Military Cards */
+.military-card {
+    background-color: rgba(26, 53, 24, 0.8);
+    border: 1px solid var(--military-highlight);
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.military-card .card-header {
+    background-color: var(--military-green);
+    color: var(--military-text);
+    border-bottom: 2px solid var(--military-highlight);
+    padding: 0.8rem 1.2rem;
+}
+
+.military-card .card-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.military-card .card-header h3 i {
+    margin-right: 10px;
+    color: var(--military-highlight);
+}
+
+.military-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Live Feed Styling */
+.live-feed {
+    position: relative;
+    border: 2px solid var(--military-highlight);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #000;
+    aspect-ratio: 16/9;
+}
+
+.feed-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(74, 136, 128, 0.6);
+    border-radius: 50%;
+}
+
+.crosshair::before,
+.crosshair::after {
+    content: '';
+    position: absolute;
+    background-color: rgba(74, 136, 128, 0.6);
+}
+
+.crosshair::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+.crosshair::after {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(74, 136, 128, 0.6);
+    box-shadow: 0 0 10px rgba(74, 136, 128, 0.8);
+    animation: scanLine 3s linear infinite;
+}
+
+@keyframes scanLine {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+.corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--military-highlight);
+    border-style: solid;
+    border-width: 0;
+}
+
+.top-left {
+    top: 10px;
+    left: 10px;
+    border-top-width: 2px;
+    border-left-width: 2px;
+}
+
+.top-right {
+    top: 10px;
+    right: 10px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+}
+
+.bottom-left {
+    bottom: 10px;
+    left: 10px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.bottom-right {
+    bottom: 10px;
+    right: 10px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+}
+
+.feed-content {
+    width: 100%;
+    height: 100%;
+}
+
+.feed-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Feed Controls */
+.feed-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-military {
+    background-color: var(--military-green);
+    color: var(--military-text);
+    border: 1px solid var(--military-highlight);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-military:hover {
+    background-color: var(--military-light-green);
+    color: #fff;
+    border-color: var(--military-highlight);
+    box-shadow: 0 0 10px rgba(74, 136, 128, 0.5);
+}
+
+.zoom-controls {
+    margin-left: auto;
+}
+
+/* Status Panel */
+.status-panel {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--military-highlight);
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(74, 136, 128, 0.3);
+}
+
+.status-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.status-label {
+    font-weight: bold;
+    color: var(--military-text);
+}
+
+.status-value {
+    font-weight: bold;
+}
+
+.status-value.secure,
+.status-value.operational,
+.status-value.low {
+    color: var(--military-success);
+}
+
+.status-value.warning,
+.status-value.medium {
+    color: var(--military-warning);
+}
+
+.status-value.danger,
+.status-value.high {
+    color: var(--military-danger);
+}
+
+/* Alert Log */
+.alert-log {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--military-highlight);
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.alert-log h4 {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    color: var(--military-highlight);
+}
+
+.log-entries {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.log-entry {
+    display: flex;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(74, 136, 128, 0.3);
+    font-size: 0.9rem;
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-entry.warning {
+    color: var(--military-warning);
+}
+
+.log-entry.danger {
+    color: var(--military-danger);
+}
+
+.log-time {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 50px;
+}
+
+/* Drone Map */
+.drone-map {
+    position: relative;
+    border: 2px solid var(--military-highlight);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #000;
+    aspect-ratio: 16/9;
+}
+
+.map-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #0a1a0a;
+    position: relative;
+    overflow: hidden;
+}
+
+.grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(to right, rgba(74, 136, 128, 0.2) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(74, 136, 128, 0.2) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+.drone {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.drone-1 {
+    top: 30%;
+    left: 20%;
+}
+
+.drone-2 {
+    top: 60%;
+    left: 50%;
+}
+
+.drone-3 {
+    top: 40%;
+    left: 80%;
+}
+
+.drone-icon {
+    width: 100%;
+    height: 100%;
+    background-color: var(--military-highlight);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform: rotate(180deg);
+    position: relative;
+    z-index: 2;
+}
+
+.drone-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(74, 136, 128, 0.3);
+    animation: dronePulse 2s infinite;
+}
+
+@keyframes dronePulse {
+    0% {
+        width: 30px;
+        height: 30px;
+        opacity: 0.7;
+    }
+    100% {
+        width: 70px;
+        height: 70px;
+        opacity: 0;
+    }
+}
+
+/* Drone Controls */
+.drone-controls {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--military-highlight);
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.drone-controls h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--military-highlight);
+}
+
+.military-select {
+    background-color: var(--military-dark);
+    color: var(--military-text);
+    border: 1px solid var(--military-highlight);
+}
+
+.drone-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.signal-strength {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.signal-strength .bar {
+    width: 4px;
+    background-color: rgba(74, 136, 128, 0.3);
+    border-radius: 1px;
+}
+
+.signal-strength .bar:nth-child(1) {
+    height: 6px;
+}
+
+.signal-strength .bar:nth-child(2) {
+    height: 9px;
+}
+
+.signal-strength .bar:nth-child(3) {
+    height: 12px;
+}
+
+.signal-strength .bar:nth-child(4) {
+    height: 15px;
+}
+
+.signal-strength .bar:nth-child(5) {
+    height: 18px;
+}
+
+.signal-strength .bar.active {
+    background-color: var(--military-success);
+}
+
+/* Detection Display */
+.detection-display {
+    position: relative;
+    border: 2px solid var(--military-highlight);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #000;
+    aspect-ratio: 16/9;
+}
+
+.detection-feed {
+    width: 100%;
+    height: 100%;
+}
+
+.detection-feed img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Detection Controls */
+.detection-controls {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--military-highlight);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.detection-controls h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--military-highlight);
+}
+
+.target-classes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+/* Detection Results */
+.detection-results {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--military-highlight);
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.detection-results h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--military-highlight);
+}
+
+.results-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(74, 136, 128, 0.3);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    background-color: var(--military-highlight);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.result-icon.person::before {
+    content: '\f007';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #fff;
+}
+
+.result-icon.vehicle::before {
+    content: '\f1b9';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #fff;
+}
+
+.result-details {
+    flex-grow: 1;
+}
+
+.result-type {
+    font-weight: bold;
+}
+
+.result-confidence {
+    font-size: 0.8rem;
+    color: var(--military-text);
+    opacity: 0.8;
+}
+
+/* Analytics Charts */
+.analytics-chart {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--military-highlight);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.analytics-chart h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--military-highlight);
+    text-align: center;
+}
+
+canvas {
+    width: 100% !important;
+    height: 250px !important;
+}
+
+/* Summary Stats */
+.summary-stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 120px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--military-highlight);
+    border-radius: 5px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--military-highlight);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--military-text);
+}
+
+/* Footer */
+.military-footer {
+    background-color: var(--military-dark);
+    border-top: 3px solid var(--military-accent);
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+}
+
+.system-status {
+    display: inline-flex;
+    align-items: center;
+}
+
+.system-status .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--military-success);
+    margin-right: 8px;
+    display: inline-block;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .summary-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .military-header {
+        padding: 1.5rem 0;
+    }
+    
+    .military-nav .nav-link {
+        padding: 0.8rem 1rem;
+    }
+    
+    .digital-clock {
+        font-size: 1rem;
+    }
+    
+    .summary-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animations */
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Loading Animation */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--military-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    width: 100px;
+    height: 100px;
+    border: 5px solid rgba(74, 136, 128, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--military-highlight);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--military-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--military-highlight);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--military-light-green);
+}

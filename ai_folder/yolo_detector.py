@@ -2,6 +2,7 @@
 from ultralytics import YOLO
 import cv2
 import numpy as np
+from .models import MODEL_PATH
 
 MODEL_PATH = "ai_models/models/yolov8n.pt"
 

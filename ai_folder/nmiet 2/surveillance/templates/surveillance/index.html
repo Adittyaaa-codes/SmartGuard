@@ -1,0 +1,390 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Surveillance & Drone Monitoring</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Military-themed Header with Animated Background -->
+    <header class="military-header">
+        <div class="radar-animation"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="text-light"><i class="fas fa-satellite"></i> TACTICAL SURVEILLANCE SYSTEM</h1>
+                    <p class="text-light">Advanced AI-Powered Monitoring & Detection</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="status-indicator online">
+                        <span class="status-dot"></span> SYSTEM ONLINE
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark military-nav">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><i class="fas fa-home"></i> Command Center</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#drone-section"><i class="fas fa-drone"></i> Drone Fleet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#detection-section"><i class="fas fa-camera"></i> Object Detection</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics-section"><i class="fas fa-chart-line"></i> Analytics</a>
+                    </li>
+                </ul>
+                <div class="ms-auto">
+                    <div class="digital-clock">
+                        <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="container-fluid py-4">
+        <!-- Dashboard Overview -->
+        <section class="row mb-4">
+            <div class="col-md-8">
+                <div class="card military-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-satellite-dish"></i> Live Surveillance Feed</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="live-feed">
+                            <div class="feed-overlay">
+                                <div class="crosshair"></div>
+                                <div class="scan-line"></div>
+                                <div class="corner top-left"></div>
+                                <div class="corner top-right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="corner bottom-right"></div>
+                            </div>
+                            <div id="surveillance-feed" class="feed-content">
+                                <!-- Live feed will be displayed here -->
+                                <img src="{% static 'images/placeholder-feed.jpg' %}" alt="Surveillance Feed" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="feed-controls mt-3">
+                            <button class="btn btn-military" id="toggle-feed"><i class="fas fa-play"></i> Start Feed</button>
+                            <button class="btn btn-military" id="capture-image"><i class="fas fa-camera"></i> Capture</button>
+                            <button class="btn btn-military" id="detect-objects"><i class="fas fa-search"></i> Detect Objects</button>
+                            <div class="zoom-controls">
+                                <button class="btn btn-sm btn-military" id="zoom-in"><i class="fas fa-search-plus"></i></button>
+                                <button class="btn btn-sm btn-military" id="zoom-out"><i class="fas fa-search-minus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card military-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-shield-alt"></i> Security Status</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="status-panel">
+                            <div class="status-item">
+                                <div class="status-label">Perimeter Security:</div>
+                                <div class="status-value secure">Secure</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-label">Active Drones:</div>
+                                <div class="status-value" id="active-drones-count">3/5</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-label">Threat Level:</div>
+                                <div class="status-value low">Low</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-label">System Status:</div>
+                                <div class="status-value operational">Operational</div>
+                            </div>
+                        </div>
+                        <div class="alert-log mt-3">
+                            <h4>Recent Alerts</h4>
+                            <div class="log-entries" id="alert-log-entries">
+                                <div class="log-entry">
+                                    <span class="log-time">08:45</span>
+                                    <span class="log-message">Perimeter scan completed - All clear</span>
+                                </div>
+                                <div class="log-entry warning">
+                                    <span class="log-time">08:30</span>
+                                    <span class="log-message">Unidentified movement detected - Sector 7</span>
+                                </div>
+                                <div class="log-entry">
+                                    <span class="log-time">08:15</span>
+                                    <span class="log-message">Drone #3 deployed for routine patrol</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Drone Fleet Section -->
+        <section id="drone-section" class="row mb-4">
+            <div class="col-12">
+                <div class="card military-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-drone-alt"></i> Drone Fleet Management</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="drone-map">
+                                    <div id="drone-map-container" class="map-container">
+                                        <!-- Map will be displayed here -->
+                                        <div class="map-placeholder">
+                                            <div class="grid-lines"></div>
+                                            <div class="drone drone-1" data-drone-id="1">
+                                                <div class="drone-icon"></div>
+                                                <div class="drone-pulse"></div>
+                                            </div>
+                                            <div class="drone drone-2" data-drone-id="2">
+                                                <div class="drone-icon"></div>
+                                                <div class="drone-pulse"></div>
+                                            </div>
+                                            <div class="drone drone-3" data-drone-id="3">
+                                                <div class="drone-icon"></div>
+                                                <div class="drone-pulse"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="drone-controls">
+                                    <h4>Drone Control Panel</h4>
+                                    <div class="form-group mb-3">
+                                        <label>Select Drone:</label>
+                                        <select class="form-control military-select" id="drone-selector">
+                                            <option value="1">Drone #1 - Recon</option>
+                                            <option value="2">Drone #2 - Surveillance</option>
+                                            <option value="3">Drone #3 - Patrol</option>
+                                            <option value="4">Drone #4 - Standby</option>
+                                            <option value="5">Drone #5 - Standby</option>
+                                        </select>
+                                    </div>
+                                    <div class="drone-actions">
+                                        <button class="btn btn-military" id="deploy-drone"><i class="fas fa-play"></i> Deploy</button>
+                                        <button class="btn btn-military" id="recall-drone"><i class="fas fa-home"></i> Recall</button>
+                                        <button class="btn btn-military" id="scan-area"><i class="fas fa-search"></i> Scan Area</button>
+                                    </div>
+                                    <div class="drone-status mt-3">
+                                        <h5>Selected Drone Status</h5>
+                                        <div class="status-item">
+                                            <div class="status-label">Battery:</div>
+                                            <div class="status-value">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 85%">85%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="status-item">
+                                            <div class="status-label">Signal:</div>
+                                            <div class="status-value">
+                                                <div class="signal-strength">
+                                                    <span class="bar active"></span>
+                                                    <span class="bar active"></span>
+                                                    <span class="bar active"></span>
+                                                    <span class="bar"></span>
+                                                    <span class="bar"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="status-item">
+                                            <div class="status-label">Status:</div>
+                                            <div class="status-value operational">Patrolling</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Object Detection Section -->
+        <section id="detection-section" class="row mb-4">
+            <div class="col-12">
+                <div class="card military-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-binoculars"></i> AI Object Detection</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="detection-display">
+                                    <div id="detection-feed" class="detection-feed">
+                                        <!-- Detection results will be displayed here -->
+                                        <img src="{% static 'images/placeholder-detection.jpg' %}" alt="Object Detection" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="detection-controls">
+                                    <h4>Detection Settings</h4>
+                                    <div class="form-group mb-3">
+                                        <label>Detection Mode:</label>
+                                        <select class="form-control military-select" id="detection-mode">
+                                            <option value="standard">Standard Detection</option>
+                                            <option value="enhanced">Enhanced Detection</option>
+                                            <option value="thermal">Thermal Imaging</option>
+                                            <option value="night">Night Vision</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label>Detection Sensitivity:</label>
+                                        <input type="range" class="form-range" id="sensitivity-slider" min="1" max="10" value="7">
+                                        <div class="d-flex justify-content-between">
+                                            <small>Low</small>
+                                            <small>High</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label>Target Classes:</label>
+                                        <div class="target-classes">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="class-person" checked>
+                                                <label class="form-check-label" for="class-person">Persons</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="class-vehicle" checked>
+                                                <label class="form-check-label" for="class-vehicle">Vehicles</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="class-weapon">
+                                                <label class="form-check-label" for="class-weapon">Weapons</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="class-animal">
+                                                <label class="form-check-label" for="class-animal">Animals</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-military" id="run-detection"><i class="fas fa-play"></i> Run Detection</button>
+                                </div>
+                                <div class="detection-results mt-3">
+                                    <h4>Detection Results</h4>
+                                    <div class="results-list" id="detection-results">
+                                        <div class="result-item">
+                                            <div class="result-icon person"></div>
+                                            <div class="result-details">
+                                                <div class="result-type">Person</div>
+                                                <div class="result-confidence">Confidence: 98%</div>
+                                            </div>
+                                        </div>
+                                        <div class="result-item">
+                                            <div class="result-icon vehicle"></div>
+                                            <div class="result-details">
+                                                <div class="result-type">Vehicle (Truck)</div>
+                                                <div class="result-confidence">Confidence: 87%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics-section" class="row">
+            <div class="col-12">
+                <div class="card military-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line"></i> Surveillance Analytics</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="analytics-chart">
+                                    <h4>Detection Frequency</h4>
+                                    <canvas id="detectionChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="analytics-chart">
+                                    <h4>Surveillance Coverage</h4>
+                                    <canvas id="coverageChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="analytics-summary">
+                                    <h4>Summary Report</h4>
+                                    <div class="summary-stats">
+                                        <div class="stat-card">
+                                            <div class="stat-value">247</div>
+                                            <div class="stat-label">Total Detections</div>
+                                        </div>
+                                        <div class="stat-card">
+                                            <div class="stat-value">18</div>
+                                            <div class="stat-label">Alerts Generated</div>
+                                        </div>
+                                        <div class="stat-card">
+                                            <div class="stat-value">92%</div>
+                                            <div class="stat-label">Area Coverage</div>
+                                        </div>
+                                        <div class="stat-card">
+                                            <div class="stat-value">5.2h</div>
+                                            <div class="stat-label">Avg. Drone Flight</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="military-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2023 Tactical Surveillance Systems | Military-Grade Security</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="system-status">
+                        <span class="status-indicator"></span> System Operational
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/drone-control.js' %}"></script>
+    <script src="{% static 'js/object-detection.js' %}"></script>
+    <script src="{% static 'js/analytics.js' %}"></script>
+</body>
+</html>
