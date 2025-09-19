@@ -3,8 +3,9 @@
 {% block title %}Capture Upload and List{% endblock %}
 
 {% block content %}
-<!-- Upload forms: keep exactly as your current code (three cards with green headers) -->
+<!-- Upload forms -->
 <div class="row mb-5 align-items-stretch">
+  <!-- Image Upload -->
   <div class="col-md-4 d-flex">
     <div class="card shadow-sm h-100 w-100">
       <div class="card-header bg-success text-white text-center fw-semibold">
@@ -26,6 +27,7 @@
     </div>
   </div>
 
+  <!-- Video Upload -->
   <div class="col-md-4 d-flex">
     <div class="card shadow-sm h-100 w-100">
       <div class="card-header bg-success text-white text-center fw-semibold">
@@ -47,6 +49,7 @@
     </div>
   </div>
 
+  <!-- Both Upload -->
   <div class="col-md-4 d-flex">
     <div class="card shadow-sm h-100 w-100">
       <div class="card-header bg-success text-white text-center fw-semibold">
@@ -76,29 +79,60 @@
   </div>
 </div>
 
-<!-- Divided Capture List Section -->
+<!-- Capture List Sections -->
 <div class="row">
-  <!-- Images -->
+  <!-- Images Section -->
   <div class="col-md-6">
     <h2>Images</h2>
     <div class="row g-3">
       {% for capture in captures %}
         {% if capture.photo %}
-          <div class="col-6 col-sm-4 col-md-3">
-            <div class="card">
-              <img src="{{ capture.photo.url }}" 
-                   class="card-img-top img-thumbnail thumb-image" alt="Capture image"
-                   data-bs-toggle="modal" data-bs-target="#imageModal{{ capture.id }}">
-              <div class="card-body p-2 d-flex justify-content-between align-items-center">
-                <small class="text-muted">{{ capture.captured_at|date:"M d, Y" }}</small>
-                <form method="post" action="{% url 'delete_photo' capture.id %}">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                </form>
+          <div class="col-12">
+            <div class="card p-2">
+              <div class="row g-2 align-items-center">
+                <!-- Left: Image -->
+                <div class="col-md-6">
+                  <img src="{{ capture.photo.url }}" class="img-fluid img-thumbnail thumb-image"
+                       alt="Capture image"
+                       data-bs-toggle="modal"
+                       data-bs-target="#imageModal{{ capture.id }}">
+                </div>
+                <!-- Right: Weapon Info -->
+                <div class="col-md-6">
+                  <small class="text-muted d-block mb-2">{{ capture.captured_at|date:"M d, Y" }}</small>
+                  <table class="table table-sm mb-2 text-center">
+                    <tbody>
+                      <tr><th>Weapon Name</th></tr>
+                      <tr>
+                        <td>
+                          {% if capture.weapon_name and capture.weapon_name != 'None' %}
+                            {{ capture.weapon_name }}
+                          {% else %}
+                            No weapon found
+                          {% endif %}
+                        </td>
+                      </tr>
+                      <tr><th>Weapon Number</th></tr>
+                      <tr>
+                        <td>
+                          {% if capture.weapon_number and capture.weapon_number != 0 %}
+                            {{ capture.weapon_number }}
+                          {% else %}
+                            0
+                          {% endif %}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <form method="post" action="{% url 'delete_photo' capture.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-          
+
           <!-- Modal Full Image -->
           <div class="modal fade" id="imageModal{{ capture.id }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -117,25 +151,57 @@
     </div>
   </div>
 
-  <!-- Videos -->
+  <!-- Videos Section -->
   <div class="col-md-6">
     <h2>Videos</h2>
     <div class="row g-3">
       {% for capture in captures %}
         {% if capture.video %}
-          <div class="col-6 col-sm-4 col-md-3">
-            <div class="card">
-              <video class="card-img-top thumb-video" muted preload="metadata" 
-                     data-bs-toggle="modal" data-bs-target="#videoModal{{ capture.id }}">
-                <source src="{{ capture.video.url }}" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-              <div class="card-body p-2 d-flex justify-content-between align-items-center">
-                <small class="text-muted">{{ capture.captured_at|date:"M d, Y" }}</small>
-                <form method="post" action="{% url 'delete_video' capture.id %}">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                </form>
+          <div class="col-12">
+            <div class="card p-2">
+              <div class="row g-2 align-items-center">
+                <!-- Left: Video -->
+                <div class="col-md-6">
+                  <video class="img-fluid thumb-video"
+                         muted preload="metadata"
+                         data-bs-toggle="modal"
+                         data-bs-target="#videoModal{{ capture.id }}">
+                    <source src="{{ capture.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <!-- Right: Weapon Info -->
+                <div class="col-md-6">
+                  <small class="text-muted d-block mb-2">{{ capture.captured_at|date:"M d, Y" }}</small>
+                  <table class="table table-sm mb-2 text-center">
+                    <tbody>
+                      <tr><th>Weapon Name</th></tr>
+                      <tr>
+                        <td>
+                          {% if capture.weapon_name and capture.weapon_name != 'None' %}
+                            {{ capture.weapon_name }}
+                          {% else %}
+                            No weapon found
+                          {% endif %}
+                        </td>
+                      </tr>
+                      <tr><th>Weapon Number</th></tr>
+                      <tr>
+                        <td>
+                          {% if capture.weapon_number and capture.weapon_number != 0 %}
+                            {{ capture.weapon_number }}
+                          {% else %}
+                            0
+                          {% endif %}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <form method="post" action="{% url 'delete_video' capture.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -183,7 +249,7 @@
   document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('hidden.bs.modal', () => {
       const video = modal.querySelector('video');
-      if(video){
+      if (video) {
         video.pause();
         video.currentTime = 0;
       }

@@ -1,25 +1,26 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Capture
-from .forms import UploadImageForm, UploadVideoForm, UploadBothForm
+from .forms import ImageForm, VideoForm, BothForm
+
 
 def capture_view(request):
-    image_form = UploadImageForm(prefix="image")
-    video_form = UploadVideoForm(prefix="video")
-    both_form = UploadBothForm(prefix="both")
+    image_form = ImageForm(prefix="image")
+    video_form = VideoForm(prefix="video")
+    both_form = BothForm(prefix="both")
 
     if request.method == "POST":
         if 'image-submit' in request.POST:
-            image_form = UploadImageForm(request.POST, request.FILES, prefix="image")
+            image_form = ImageForm(request.POST, request.FILES, prefix="image")
             if image_form.is_valid():
                 image_form.save()
                 return redirect('capture')
         elif 'video-submit' in request.POST:
-            video_form = UploadVideoForm(request.POST, request.FILES, prefix="video")
+            video_form = VideoForm(request.POST, request.FILES, prefix="video")
             if video_form.is_valid():
                 video_form.save()
                 return redirect('capture')
         elif 'both-submit' in request.POST:
-            both_form = UploadBothForm(request.POST, request.FILES, prefix="both")
+            both_form = BothForm(request.POST, request.FILES, prefix="both")
             if both_form.is_valid():
                 both_form.save()
                 return redirect('capture')
@@ -40,6 +41,7 @@ def capture_delete_view(request, capture_id):
         return redirect('capture')
     return redirect('capture')
 
+
 def delete_photo(request, capture_id):
     capture = get_object_or_404(Capture, id=capture_id)
     if request.method == "POST":
@@ -48,6 +50,7 @@ def delete_photo(request, capture_id):
         capture.save()
         return redirect('capture')
     return redirect('capture')
+
 
 def delete_video(request, capture_id):
     capture = get_object_or_404(Capture, id=capture_id)
