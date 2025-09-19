@@ -1,0 +1,194 @@
+{% extends "camera_detection/base.html" %}
+
+{% block title %}Capture Upload and List{% endblock %}
+
+{% block content %}
+<!-- Upload forms: keep exactly as your current code (three cards with green headers) -->
+<div class="row mb-5 align-items-stretch">
+  <div class="col-md-4 d-flex">
+    <div class="card shadow-sm h-100 w-100">
+      <div class="card-header bg-success text-white text-center fw-semibold">
+        Upload Image Only
+      </div>
+      <div class="card-body d-flex flex-column justify-content-between">
+        <form method="post" enctype="multipart/form-data" class="flex-grow-1">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ image_form.photo.label_tag }}
+            {{ image_form.photo }}
+            {% if image_form.photo.errors %}
+              <div class="text-danger small">{{ image_form.photo.errors }}</div>
+            {% endif %}
+          </div>
+          <button name="image-submit" type="submit" class="btn btn-success w-100 mt-auto">Upload Image</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 d-flex">
+    <div class="card shadow-sm h-100 w-100">
+      <div class="card-header bg-success text-white text-center fw-semibold">
+        Upload Video Only
+      </div>
+      <div class="card-body d-flex flex-column justify-content-between">
+        <form method="post" enctype="multipart/form-data" class="flex-grow-1">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ video_form.video.label_tag }}
+            {{ video_form.video }}
+            {% if video_form.video.errors %}
+              <div class="text-danger small">{{ video_form.video.errors }}</div>
+            {% endif %}
+          </div>
+          <button name="video-submit" type="submit" class="btn btn-success w-100 mt-auto">Upload Video</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 d-flex">
+    <div class="card shadow-sm h-100 w-100">
+      <div class="card-header bg-success text-white text-center fw-semibold">
+        Upload Image & Video
+      </div>
+      <div class="card-body d-flex flex-column justify-content-between">
+        <form method="post" enctype="multipart/form-data" class="flex-grow-1">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ both_form.photo.label_tag }}
+            {{ both_form.photo }}
+            {% if both_form.photo.errors %}
+              <div class="text-danger small">{{ both_form.photo.errors }}</div>
+            {% endif %}
+          </div>
+          <div class="mb-3">
+            {{ both_form.video.label_tag }}
+            {{ both_form.video }}
+            {% if both_form.video.errors %}
+              <div class="text-danger small">{{ both_form.video.errors }}</div>
+            {% endif %}
+          </div>
+          <button name="both-submit" type="submit" class="btn btn-success w-100 mt-auto">Upload Both</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Divided Capture List Section -->
+<div class="row">
+  <!-- Images -->
+  <div class="col-md-6">
+    <h2>Images</h2>
+    <div class="row g-3">
+      {% for capture in captures %}
+        {% if capture.photo %}
+          <div class="col-6 col-sm-4 col-md-3">
+            <div class="card">
+              <img src="{{ capture.photo.url }}" 
+                   class="card-img-top img-thumbnail thumb-image" alt="Capture image"
+                   data-bs-toggle="modal" data-bs-target="#imageModal{{ capture.id }}">
+              <div class="card-body p-2 d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ capture.captured_at|date:"M d, Y" }}</small>
+                <form method="post" action="{% url 'delete_photo' capture.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Modal Full Image -->
+          <div class="modal fade" id="imageModal{{ capture.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content">
+                <div class="modal-body p-0">
+                  <img src="{{ capture.photo.url }}" class="img-fluid" alt="Full size image">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Videos -->
+  <div class="col-md-6">
+    <h2>Videos</h2>
+    <div class="row g-3">
+      {% for capture in captures %}
+        {% if capture.video %}
+          <div class="col-6 col-sm-4 col-md-3">
+            <div class="card">
+              <video class="card-img-top thumb-video" muted preload="metadata" 
+                     data-bs-toggle="modal" data-bs-target="#videoModal{{ capture.id }}">
+                <source src="{{ capture.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <div class="card-body p-2 d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ capture.captured_at|date:"M d, Y" }}</small>
+                <form method="post" action="{% url 'delete_video' capture.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Full Video -->
+          <div class="modal fade" id="videoModal{{ capture.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+              <div class="modal-content bg-dark">
+                <div class="modal-body p-0">
+                  <video controls autoplay style="width: 100%; height: 100%;">
+                    <source src="{{ capture.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+.thumb-image {
+  cursor: pointer;
+  height: 140px;
+  object-fit: cover;
+  width: 100%;
+}
+.thumb-video {
+  cursor: pointer;
+  height: 140px;
+  width: 100%;
+  object-fit: cover;
+  background: black;
+}
+</style>
+
+<script>
+  // Pause video inside modal on close
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('hidden.bs.modal', () => {
+      const video = modal.querySelector('video');
+      if(video){
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  });
+</script>
+
+{% endblock %}

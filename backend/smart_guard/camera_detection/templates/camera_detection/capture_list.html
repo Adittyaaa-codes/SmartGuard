@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture List</title>
+</head>
+<body>
+    <h1>Captured Photos and Videos</h1>
+
+    <a href="{% url 'capture_upload' %}">Upload New Capture</a>
+    <hr>
+
+    {% for capture in captures %}
+        <div style="margin-bottom: 20px;">
+            <p><strong>Captured At:</strong> {{ capture.captured_at }}</p>
+            <img src="{{ capture.photo.url }}" alt="Capture Photo" width="300" />
+            <br>
+            <video width="320" height="240" controls>
+                <source src="{{ capture.video.url }}" type="video/mp4"> <!-- Adjust type as required -->
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No captures found.</p>
+    {% endfor %}
+</body>
+</html>
